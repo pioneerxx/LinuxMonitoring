@@ -1,0 +1,18 @@
+#!/bin/bash
+
+echo -e "HOSTNAME = $(hostname)"
+echo -e "TIMEZONE = $(timedatectl | grep 'zone' | awk '{print $3" "$4" "$5}')"
+echo -e "USER = $(whoami)"
+echo -e "OS = $(cat /etc/issue | tr -d "n")"
+echo -e "DATE = $(date | awk '{print $3" "$2" "$6" "$4}')"
+echo -e "UPTIME = $(uptime | awk '{print $3}' | sed 's/,//')"
+echo -e "UPTIME_SEC = $(awk '{print $1}' /proc/uptime)"
+echo -e "IP = $(ip a | grep 'enp0s3$' | awk '{print $2}' | sed 's/\/24//')"
+echo -e "MASK = $(netstat -r | head -4 | awk '{print $3}' | tail -n 1)"
+echo -e "GATEWAY = $(ip r | grep 'default' | awk '{print $3}')"
+echo -e "RAM_TOTAL = $(cat /proc/meminfo | grep 'MemTotal' | awk '{printf "%.3f", $2/1024/1024}') GB"
+echo -e "RAM_USED = $(free | grep 'Mem' | awk '{printf "%.3f", $3/1024/1024}') GB"
+echo -e "RAM_FREE = $(free | grep 'Mem' | awk '{printf "%.3f", $4/1024/1024}') GB"
+echo -e "SPACE_ROOT = $(df | grep '/$' | awk '{printf "%.2f", $2/1024}') MB"
+echo -e "SPACE_ROOT_USED = $(df | grep '/$' | awk '{printf "%.2f", $3/1024}') MB"
+echo -e "SPACE_ROOT_FREE = $(df | grep '/$' | awk '{printf "%.2f", $4/1024}') MB"
